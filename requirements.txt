@@ -1,2 +1,2 @@
-scikit-image
 requests
+PyExecJS
