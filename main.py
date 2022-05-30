@@ -17,13 +17,13 @@ class FC(object):
         self.ocrServer = ocrServer
         pass
     
-    def fuckCourse(self, profiledId, courseId):
+    def fuckCourse(self, profiledId, lessonId):
         try:
             body = {
                 "optype": "true",
-                "operator0": courseId + ":true:0",
-                "lesson0":courseId,
-                "schLessonGroup_" + courseId:"undefined"
+                "operator0": lessonId + ":true:0",
+                "lesson0":lessonId,
+                "schLessonGroup_" + lessonId:"undefined"
             }
             req = requests.post("http://jwgl.cuit.edu.cn/eams/stdElectCourse!batchOperator.action?profileId=" + profiledId,
                 headers={
@@ -126,16 +126,10 @@ if __name__ == "__main__":
     # 加载配置
     with open('config.json',encoding='utf-8') as f:
         config = json.load(f)
-    cookie = None
-    profiledId = None
-    courseId = None
+    cookie = config['cookie']
+    profiledId = config['profiled_id']
+    lessonId = config['lesson_id']
 
-    if cookie == None:
-        cookie = input("请输入cookie:")
-    if profiledId == None:
-        profiledId = input("请输入profiledId：")
-    if courseId == None:
-        courseId = input("请输入courseId:")
     print("开始了呀")
     cuit = FC(cookie, config['ocr_server'])
     
@@ -179,7 +173,7 @@ if __name__ == "__main__":
     while True:
         i += 1
         print(i)
-        if cuit.fuckCourse(profiledId, courseId):
+        if cuit.fuckCourse(profiledId, lessonId):
             break
         time.sleep(0.5)
         if i >= 20:
