@@ -22,7 +22,7 @@ class FC(object):
             body = {
                 "optype": "true",
                 "operator0": lessonId + ":true:0",
-                "lesson0":lessonId,
+                "lesson0": lessonId,
                 "schLessonGroup_" + lessonId:"undefined"
             }
             req = requests.post("http://jwgl.cuit.edu.cn/eams/stdElectCourse!batchOperator.action?profileId=" + profiledId,
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     while True:
         i += 1
         print(i)
-        if cuit.fuckCourse(profiledId, lessonId):
+        if cuit.fuckCourse(str(profiledId), str(lessonId)):
             break
         time.sleep(0.5)
         if i >= 20:

@@ -6,9 +6,11 @@
 
 ## 运行你的本地OCR服务器
 
-`docker run -p 4006:4006 --name vercode jiyecafe/wecuit_py`
+```
+docker run -p 4006:4006 --name vercode jiyecafe/wecuit_py
+```
 
-Docker镜像相关源代码在这里: https://github.com/WeCuit/WeCuit-API-PY
+Docker镜像相关源代码在这里(仅供参考,可忽略): https://github.com/WeCuit/WeCuit-API-PY
 
 ## 简单食用
 
