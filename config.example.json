@@ -1,6 +1,6 @@
 {
     "ocr_server": "http://127.0.0.1:4006/vercode",
     "profiled_id": 4130,
-    "lesson_id": 123,
+    "course_name": "数字孪生技术",
     "cookie": ""
 }
