@@ -1,4 +1,5 @@
 import json
+import platform
 import requests
 import re
 import time
@@ -192,7 +193,10 @@ if __name__ == "__main__":
         time.sleep(0.5)
         if i >= 20:
             i = 0
-            os.system("cls")
+            if platform.system().lower() == 'linux':
+                os.system("clear")
+            elif platform.system().lower() == 'windows':
+                os.system("cls")
             pass
         pass
     pass
