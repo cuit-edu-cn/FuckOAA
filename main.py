@@ -10,7 +10,6 @@ author: msojocs
 '''
 class FC(object):
     cookie = ""
-    available = False
     ocrServer = ""
     def __init__(self, cookie, ocrServer):
         self.cookie = cookie
@@ -57,7 +56,12 @@ class FC(object):
         headers = {
             'cookie': self.cookie
             }
-        picReq=requests.get(url=url, headers=headers)
+        while True:
+            try:
+                picReq=requests.get(url=url, headers=headers, timeout=5)
+                break
+            except Exception as err:
+                continue
         # print(picReq.content)
         return picReq.content
         pass
@@ -85,11 +89,16 @@ class FC(object):
             'captcha_response': captcha,
             'electionProfile.id': profiledId
         }
-        checkReq = requests.post(url=url, headers=headers, data=data, allow_redirects=False)
+        while True:
+            try:
+                checkReq = requests.post(url=url, headers=headers, data=data, allow_redirects=False, timeout=5)
+                break
+            except Exception as err:
+                continue
+
         # print(checkReq.text)
         # 未登录与验证码错误都是302,但Location去向不同
         if checkReq.status_code == 200 :
-            self.available = '操作 失败:不在选课时间内' not in checkReq.text
             return True
         elif 'sso' in checkReq.headers['Location']:
             # 转到统一登录中心
@@ -107,11 +116,16 @@ class FC(object):
             'captcha_response': captcha,
             'electionProfile.id': profiledId
         }
-        checkReq = requests.post(url=url, headers=headers, data=data, allow_redirects=False)
+        while True:
+            try:
+                checkReq = requests.post(url=url, headers=headers, data=data, allow_redirects=False, timeout=5)
+                break
+            except Exception as err:
+                continue
         # print(checkReq.text)
         # 未登录与验证码错误都是302,但Location去向不同
         if checkReq.status_code == 200 :
-            return '操作 失败:不在选课时间内' not in checkReq.text
+            return '不在选课时间内' not in checkReq.text
         elif 'sso' in checkReq.headers['Location']:
             # 转到统一登录中心
             print('cookie失效！！！')
@@ -141,8 +155,8 @@ if __name__ == "__main__":
         print('OCR: ' + ocrResult['result'])
 
         # 按识别出来的验证码写入文件
-        with open('pic/' + ocrResult['result'] + '.jpg', 'wb') as file:
-            file.write(pic)
+        # with open('pic/' + ocrResult['result'] + '.jpg', 'wb') as file:
+        #     file.write(pic)
 
         checkResult = cuit.checkCaptcha(ocrResult['result'], profiledId)
         if checkResult:
